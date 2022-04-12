@@ -2,6 +2,7 @@
 // GET DOM ELEMENTS
 // *******************************************************
 
+const body = document.querySelector('body');
 const time = document.getElementById('time');
 const date = document.getElementById('date');
 const timezone = document.getElementById('time-zone');
@@ -14,10 +15,6 @@ const humidity = document.getElementById('humidity');
 const pressure = document.getElementById('pressure');
 const sunrise = document.getElementById('sunrise');
 const sunset = document.getElementById('sunset');
-
-btnSearch.addEventListener('click', () => {
-  getSpecificWeather(searchInput.value);
-});
 
 // *******************************************************
 // GLOBAL VARIABLES
@@ -74,10 +71,10 @@ const months = [
 })();
 
 // *******************************************************
-// CURRENT WEATHER
+// CURRENT LOCAL WEATHER
 // *******************************************************
 
-const showCurrentWeatherData = (data) => {
+const showLocalWeather = (data) => {
   timezone.innerText = data.timezone;
   currentTemp.innerText = `${data.current.temp} °C`;
   sky.innerText = data.current.weather[0].main;
@@ -92,7 +89,11 @@ const showCurrentWeatherData = (data) => {
     .format('HH:mm a');
 };
 
-const getCurrentWeatherData = () => {
+const showLocalWeatherForecast = (data) => {
+  
+};
+
+const getLocalWeather = () => {
   navigator.geolocation.getCurrentPosition((success) => {
 
     fetch(
@@ -101,36 +102,63 @@ const getCurrentWeatherData = () => {
       .then((resolution) => resolution.json())
       .then((data) => {
         console.log(data);
-        showCurrentWeatherData(data);
+        showLocalWeather(data);
       });
   });
 };
 
-getCurrentWeatherData();
+getLocalWeather();
 
-function getSpecificWeather (city) {
-  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`)
-  .then((resolution) => resolution.json())
-  .then((data) => {
-    console.log(data);
-    timezone.innerText = data.name + ', ' + data.sys.country;
-    currentTemp.innerText = `${data.main.temp} °C`;
-    sky.innerText = data.weather[0].main;
-    windSpeed.innerText = `${data.wind.speed} m/s`;
-    humidity.innerText = `${data.main.humidity}%`;
-    pressure.innerText = data.main.pressure;
-    sunrise.innerText = window
-      .moment(data.sys.sunrise * 1000)
-      .format('HH:mm a');
-    sunset.innerText = window
-      .moment(data.sys.sunset * 1000)
-      .format('HH:mm a');
-    searchInput.value = ''
-  })
+// *******************************************************
+// CURRENT WEATHER FOR USER-SPECIFIED CITY
+// *******************************************************
+
+// RETRIEVE DATA FROM API
+async function getUserSearchedWeather (city) {
+  const resolution = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`);
+  const data = await resolution.json();
+  const forecastRes = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`);
+  const forecastData = await forecastRes.json();
+  return { data, forecastData }
 }
 
-// getSpecificWeather('munich');
-
-function getUserSpecifiedWeather() {
-  console.log('weather')
+// DISPLAY API DATA
+function displayUserSearchedWeather (data) {
+  timezone.innerText = data.name + ', ' + data.sys.country;
+  currentTemp.innerText = `${data.main.temp} °C`;
+  sky.innerText = data.weather[0].main;
+  windSpeed.innerText = `${data.wind.speed} m/s`;
+  humidity.innerText = `${data.main.humidity}%`;
+  pressure.innerText = data.main.pressure;
+  sunrise.innerText = window
+    .moment(data.sys.sunrise * 1000)
+    .format('HH:mm a');
+  sunset.innerText = window
+    .moment(data.sys.sunset * 1000)
+    .format('HH:mm a');
+  searchInput.value = '';
 }
+
+// EVENT LISTENERS
+btnSearch.addEventListener('click', () => {
+  getUserSearchedWeather(searchInput.value)
+    .then((result) => {
+      console.log(result);
+      displayUserSearchedWeather(result.data);
+    });
+});
+
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    getUserSearchedWeather(searchInput.value)
+    .then((result) => {
+      console.log(result);
+      displayUserSearchedWeather(result.data);
+    });
+  }
+});
+
+// *******************************************************
+// WEATHER FORECAST FOR USER-SPECIFIED CITY
+// *******************************************************
+
