@@ -20,7 +20,7 @@ const sunset = document.getElementById('sunset');
 // GLOBAL VARIABLES
 // *******************************************************
 
-const API_KEY = 'c55b2f992c145e0b6c4f202c68a74305';
+const API_KEY = '864d1bebfd0c9a325b00b701652b2e62';
 const days = [
   'Sunday',
   'Monday',
@@ -109,11 +109,15 @@ const getLocalWeather = () => {
         console.log(data);
         displayLocalWeather(data);
         displayWeatherForecast(data.daily);
+      })
+      .catch((error) => {
+        alert(`Couldn't retrieve data for ${searchInput.value}:
+        ${error}`);  
       });
   });
 };
 
-getLocalWeather();
+// getLocalWeather();
 
 // *******************************************************
 // WEATHER FOR USER-SPECIFIED CITY
@@ -156,6 +160,10 @@ btnSearch.addEventListener('click', () => {
       console.log(result);
       displayUserSearchedWeather(result.currentData);
       displayWeatherForecast(result.forecastData.daily);
+    })
+    .catch((error) => {
+      alert(`Couldn't retrieve data for ${searchInput.value}:
+      ${error}`);
     });
 });
 
@@ -166,6 +174,10 @@ searchInput.addEventListener('keydown', (e) => {
       console.log(result);
       displayUserSearchedWeather(result.currentData);
       displayWeatherForecast(result.forecastData.daily);
-    });
+    })
+    .catch((error) => {
+      alert(`Couldn't retrieve data for ${searchInput.value}:
+      ${error}`);
+    });;
   }
 });
