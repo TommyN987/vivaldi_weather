@@ -74,7 +74,7 @@ const months = [
 // CURRENT LOCAL WEATHER
 // *******************************************************
 
-const showLocalWeather = (data) => {
+const displayLocalWeather = (data) => {
   timezone.innerText = data.timezone;
   currentTemp.innerText = `${data.current.temp} °C`;
   sky.innerText = data.current.weather[0].main;
@@ -89,8 +89,13 @@ const showLocalWeather = (data) => {
     .format('HH:mm a');
 };
 
-const showLocalWeatherForecast = (data) => {
-  
+const displayWeatherForecast = (data) => {
+  for (let i = 0; i < (data.length - 1); i++) {
+    document.getElementById(`day-name-${i}`).innerText = window.moment(data[i].dt*1000).format('ddd');
+    document.getElementById(`day-temp-${i}`).innerText = data[i].temp.day;
+    document.getElementById(`night-temp-${i}`).innerText = data[i].temp.night;
+    document.getElementById(`icon-day-${i}`).src = `http://openweathermap.org/img/wn/${data[i].weather[0].icon}@2x.png`;
+  }
 };
 
 const getLocalWeather = () => {
@@ -102,7 +107,8 @@ const getLocalWeather = () => {
       .then((resolution) => resolution.json())
       .then((data) => {
         console.log(data);
-        showLocalWeather(data);
+        displayLocalWeather(data);
+        displayWeatherForecast(data.daily);
       });
   });
 };
@@ -110,16 +116,20 @@ const getLocalWeather = () => {
 getLocalWeather();
 
 // *******************************************************
-// CURRENT WEATHER FOR USER-SPECIFIED CITY
+// WEATHER FOR USER-SPECIFIED CITY
 // *******************************************************
 
 // RETRIEVE DATA FROM API
 async function getUserSearchedWeather (city) {
+  
+  // CURRENT WEATHER DATA
   const resolution = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`);
-  const data = await resolution.json();
-  const forecastRes = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`);
+  const currentData = await resolution.json();
+  
+  // FORECAST DATA
+  const forecastRes = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${currentData.coord.lat}&lon=${currentData.coord.lon}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`);
   const forecastData = await forecastRes.json();
-  return { data, forecastData }
+  return { currentData, forecastData }
 }
 
 // DISPLAY API DATA
@@ -144,7 +154,8 @@ btnSearch.addEventListener('click', () => {
   getUserSearchedWeather(searchInput.value)
     .then((result) => {
       console.log(result);
-      displayUserSearchedWeather(result.data);
+      displayUserSearchedWeather(result.currentData);
+      displayWeatherForecast(result.forecastData.daily);
     });
 });
 
@@ -153,12 +164,8 @@ searchInput.addEventListener('keydown', (e) => {
     getUserSearchedWeather(searchInput.value)
     .then((result) => {
       console.log(result);
-      displayUserSearchedWeather(result.data);
+      displayUserSearchedWeather(result.currentData);
+      displayWeatherForecast(result.forecastData.daily);
     });
   }
 });
-
-// *******************************************************
-// WEATHER FORECAST FOR USER-SPECIFIED CITY
-// *******************************************************
-
