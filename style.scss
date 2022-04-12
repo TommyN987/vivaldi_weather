@@ -14,7 +14,7 @@ html {
 }
 
 body {
-  background: url(../img/snowy.jpg);
+  background: url(../img/cloudy.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -148,7 +148,7 @@ body {
   .forecast {
     justify-content: start;
     align-items: none;
-    overflow-y: scroll;
+    overflow-x: scroll;
 
     .today {
       .temp {
