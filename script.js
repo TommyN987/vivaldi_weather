@@ -224,4 +224,4 @@ searchInput.addEventListener('keydown', (e) => {
   }
 });
 
-// getLocalWeather();
+getLocalWeather();
