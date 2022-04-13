@@ -16,6 +16,7 @@ const humidity = document.getElementById('humidity');
 const pressure = document.getElementById('pressure');
 const sunrise = document.getElementById('sunrise');
 const sunset = document.getElementById('sunset');
+const audio = document.querySelector('audio');
 
 // *******************************************************
 // GLOBAL VARIABLES
@@ -174,7 +175,7 @@ searchInput.addEventListener('keydown', (e) => {
 });
 
 function setMood(data) {
-  if (data.current.weather[0].main === 'Snow' || (data.current.temp * 1) < 0) {
+  if (data.current.weather[0].main === 'Snow' || data.current.temp < 0) {
     body.style.backgroundImage = `url(../img/snowy.jpg)`
   } else if (data.current.weather[0].main === 'Clouds') {
     body.style.backgroundImage = `url(../img/cloudy.jpg)`
@@ -186,5 +187,22 @@ function setMood(data) {
     body.style.backgroundImage = `url(../img/stormy.jpg)`
   } else {
     body.style.backgroundImage = `url(../img/default.jpg)`
+  }
+
+  if (data.current.weather[0].main === 'Thunderstorm' || data.current.weather[0].main === 'Rain') {
+    audio.src = './audio/storm.mp3'
+    audio.play();
+  } else if (data.current.temp < 5) {
+    audio.src = './audio/winter.mp3'
+    audio.play();
+  } else if (data.current.temp < 15) {
+    audio.src = './audio/autumn.mp3'
+    audio.play();
+  } else if (data.current.temp < 25) {
+    audio.src = './audio/spring.mp3'
+    audio.play();
+  } else {
+    audio.src = './audio/summer.mp3'
+    audio.play();
   }
 }
