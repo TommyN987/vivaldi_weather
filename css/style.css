@@ -13,7 +13,6 @@ html {
 }
 
 body {
-  background: url(../img/cloudy.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -34,12 +33,16 @@ body {
 .current-info .others {
   display: flex;
   flex-direction: column;
-  background: rgba(24, 24, 27, 0.6);
+  background: rgba(24, 24, 27, 0.85);
   padding: 1.5rem;
   border-radius: 10px;
   font-weight: 200;
   margin: 10px 0;
   border: 1px solid #eee;
+}
+.current-info .others #locality {
+  font-size: 1.8rem;
+  font-weight: 400;
 }
 .current-info .others .weather-item {
   display: flex;
@@ -48,6 +51,13 @@ body {
 
 .date-container {
   font-weight: 100;
+}
+.date-container #datetime {
+  background: rgba(24, 24, 27, 0.85);
+  background: rgba(24, 24, 27, 0.85);
+  padding: 0.4rem 1.5rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #eee;
 }
 .date-container .time {
   font-size: 5rem;
@@ -61,19 +71,31 @@ body {
 }
 
 .place-container {
-  text-align: end;
+  background: rgba(24, 24, 27, 0.85);
+  height: 100%;
+  padding: 1rem 1.5rem;
+  border: 1px solid #eee;
+  border-radius: 10px;
 }
 .place-container .time-zone {
   font-size: 2rem;
   font-weight: 200;
 }
-.place-container .country {
-  font-size: 1rem;
-  font-weight: 700;
+.place-container #search-input {
+  margin-top: 0.4rem;
+  margin-right: 0.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: 10px;
+}
+.place-container #btn-search {
+  padding: 6px 16px;
+  background-color: rgb(223, 108, 0);
+  color: white;
+  font-weight: bold;
 }
 
 .forecast {
-  background: rgba(24, 24, 27, 0.8);
+  background: rgba(24, 24, 27, 0.85);
   padding: 2rem;
   position: fixed;
   bottom: 0;

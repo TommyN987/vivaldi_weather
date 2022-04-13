@@ -8,6 +8,7 @@ const date = document.getElementById('date');
 const timezone = document.getElementById('time-zone');
 const searchInput = document.getElementById('search-input');
 const btnSearch = document.getElementById('btn-search');
+const locality = document.getElementById('locality');
 const currentTemp = document.getElementById('current-temp');
 const sky = document.getElementById('sky');
 const windSpeed = document.getElementById('wind-speed');
@@ -20,7 +21,7 @@ const sunset = document.getElementById('sunset');
 // GLOBAL VARIABLES
 // *******************************************************
 
-const API_KEY = '864d1bebfd0c9a325b00b701652b2e62';
+const API_KEY = 'c55b2f992c145e0b6c4f202c68a74305';
 const days = [
   'Sunday',
   'Monday',
@@ -82,10 +83,10 @@ const displayLocalWeather = (data) => {
   humidity.innerText = `${data.current.humidity}%`;
   pressure.innerText = data.current.pressure;
   sunrise.innerText = window
-    .moment(data.current.sunrise * 1000)
+    .moment((data.current.sunrise + data.timezone_offset - 7200) * 1000)
     .format('HH:mm a');
   sunset.innerText = window
-    .moment(data.current.sunset * 1000)
+    .moment((data.current.sunset + data.timezone_offset - 7200) * 1000)
     .format('HH:mm a');
 };
 
@@ -100,13 +101,14 @@ const displayWeatherForecast = (data) => {
 
 const getLocalWeather = () => {
   navigator.geolocation.getCurrentPosition((success) => {
-
+    console.log(success);
     fetch(
       `https://api.openweathermap.org/data/2.5/onecall?lat=${success.coords.latitude}&lon=${success.coords.longitude}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`
     )
       .then((resolution) => resolution.json())
       .then((data) => {
         console.log(data);
+        setMood(data);
         displayLocalWeather(data);
         displayWeatherForecast(data.daily);
       })
@@ -133,24 +135,7 @@ async function getUserSearchedWeather (city) {
   // FORECAST DATA
   const forecastRes = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${currentData.coord.lat}&lon=${currentData.coord.lon}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`);
   const forecastData = await forecastRes.json();
-  return { currentData, forecastData }
-}
-
-// DISPLAY API DATA
-function displayUserSearchedWeather (data) {
-  timezone.innerText = data.name + ', ' + data.sys.country;
-  currentTemp.innerText = `${data.main.temp} °C`;
-  sky.innerText = data.weather[0].main;
-  windSpeed.innerText = `${data.wind.speed} m/s`;
-  humidity.innerText = `${data.main.humidity}%`;
-  pressure.innerText = data.main.pressure;
-  sunrise.innerText = window
-    .moment(data.sys.sunrise * 1000)
-    .format('HH:mm a');
-  sunset.innerText = window
-    .moment(data.sys.sunset * 1000)
-    .format('HH:mm a');
-  searchInput.value = '';
+  return forecastData;
 }
 
 // EVENT LISTENERS
@@ -158,8 +143,11 @@ btnSearch.addEventListener('click', () => {
   getUserSearchedWeather(searchInput.value)
     .then((result) => {
       console.log(result);
-      displayUserSearchedWeather(result.currentData);
-      displayWeatherForecast(result.forecastData.daily);
+      locality.innerText = searchInput.value.toUpperCase();
+      searchInput.value = '';
+      setMood(result);
+      displayLocalWeather(result);
+      displayWeatherForecast(result.daily);
     })
     .catch((error) => {
       alert(`Couldn't retrieve data for ${searchInput.value}:
@@ -172,8 +160,11 @@ searchInput.addEventListener('keydown', (e) => {
     getUserSearchedWeather(searchInput.value)
     .then((result) => {
       console.log(result);
-      displayUserSearchedWeather(result.currentData);
-      displayWeatherForecast(result.forecastData.daily);
+      locality.innerText = searchInput.value.toUpperCase();
+      searchInput.value = '';
+      setMood(result);
+      displayLocalWeather(result);
+      displayWeatherForecast(result.daily);
     })
     .catch((error) => {
       alert(`Couldn't retrieve data for ${searchInput.value}:
@@ -181,3 +172,19 @@ searchInput.addEventListener('keydown', (e) => {
     });;
   }
 });
+
+function setMood(data) {
+  if (data.current.weather[0].main === 'Snow' || (data.current.temp * 1) < 0) {
+    body.style.backgroundImage = `url(../img/snowy.jpg)`
+  } else if (data.current.weather[0].main === 'Clouds') {
+    body.style.backgroundImage = `url(../img/cloudy.jpg)`
+  } else if (data.current.weather[0].main === 'Clear') {
+    body.style.backgroundImage = `url(../img/sunny.jpg)`
+  } else if (data.current.weather[0].main === 'Rain' || data.current.weather[0].main === 'Drizzle') {
+    body.style.backgroundImage = `url(../img/rainy.jpg)`
+  } else if (data.current.weather[0].main === 'Thunderstorm') {
+    body.style.backgroundImage = `url(../img/stormy.jpg)`
+  } else {
+    body.style.backgroundImage = `url(../img/default.jpg)`
+  }
+}

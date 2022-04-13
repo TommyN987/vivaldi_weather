@@ -14,7 +14,6 @@ html {
 }
 
 body {
-  background: url(../img/cloudy.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -35,12 +34,17 @@ body {
   .others {
     display: flex;
     flex-direction: column;
-    background: rgba(24, 24, 27, .6);
+    background: rgba(24, 24, 27, .85);
     padding: 1.5rem;
     border-radius: 10px;
     font-weight: 200;
     margin: 10px 0;
     border: 1px solid #eee;
+
+    #locality {
+      font-size: 1.8rem;
+      font-weight: 400;
+    }
 
     .weather-item {
       display: flex;
@@ -51,6 +55,14 @@ body {
 
 .date-container {
   font-weight: 100;
+
+  #datetime {
+    background: rgba(24, 24, 27, .85);
+    background: rgba(24, 24, 27, .85);
+    padding: .4rem 1.5rem 1rem;
+    border-radius: 10px;
+    border: 1px solid #eee;
+  }
 
   .time {
     font-size: 5rem;
@@ -67,21 +79,35 @@ body {
 }
 
 .place-container {
-  text-align: end;
+  background: rgba(24, 24, 27, .85);
+  height: 100%;
+  padding: 1rem 1.5rem;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  // text-align: center;
 
   .time-zone {
     font-size: 2rem;
     font-weight: 200;
   }
 
-  .country {
-    font-size: 1rem;
-    font-weight: 700;
+  #search-input {
+    margin-top: .4rem;
+    margin-right: .5rem;
+    padding: .4rem 1rem;
+    border-radius: 10px;
+  }
+
+  #btn-search {
+    padding: 6px 16px;
+    background-color: rgb(223, 108, 0);
+    color: white;
+    font-weight: bold;
   }
 }
 
 .forecast {
-  background: rgba(24, 24, 27, .8);
+  background: rgba(24, 24, 27, .85);
   padding: 2rem;
   position: fixed;
   bottom: 0;

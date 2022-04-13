@@ -11,9 +11,12 @@
     <div class="container">
       <div class="current-info">
         <div class="date-container">
-          <div class="time" id="time"><span id="am-pm"></span></div>
-          <div class="date" id="date"></div>
+          <div id="datetime">
+            <div class="time" id="time"><span id="am-pm"></span></div>
+            <div class="date" id="date"></div>
+          </div>
           <div class="others" id="current-weather-items">
+            <div id="locality"></div>
             <div class="weather-item">
               <div>Temperature</div>
               <div id="current-temp">temp &#176;C</div>
@@ -46,7 +49,7 @@
         </div>
         <div class="place-container">
           <div class="time-zone" id="time-zone">Europe/Bratislava</div>
-          <input type="text" id="search-input" placeholder="Enter city">
+          <input type="text" id="search-input" placeholder="Enter city" />
           <button id="btn-search">Search</button>
         </div>
       </div>
@@ -61,8 +64,10 @@
         />
         <div class="other">
           <div class="day" id="day-name-0">Friday</div>
-          <div class="temp">Day - <span id="day-temp-0">5.5</span> &#176;C</div>
-          <div class="temp">Night - <span id="night-temp-0">5.5</span> &#176;C</div>
+          <div class="temp">Day: <span id="day-temp-0">5.5</span> &#176;C</div>
+          <div class="temp">
+            Night: <span id="night-temp-0">5.5</span> &#176;C
+          </div>
         </div>
       </div>
       <div class="future-forecast-container" id="future-forecast-container">
@@ -74,8 +79,10 @@
             class="w-icon"
             id="icon-day-1"
           />
-          <div class="temp">Day - <span id="day-temp-1">5.5</span> &#176;C</div>
-          <div class="temp">Night - <span id="night-temp-1">5.5</span> &#176;C</div>
+          <div class="temp">Day: <span id="day-temp-1">5.5</span> &#176;C</div>
+          <div class="temp">
+            Night: <span id="night-temp-1">5.5</span> &#176;C
+          </div>
         </div>
         <div class="future-forecast-item">
           <div class="day" id="day-name-2">Friday</div>
@@ -85,8 +92,10 @@
             class="w-icon"
             id="icon-day-2"
           />
-          <div class="temp">Day - <span id="day-temp-2">5.5</span> &#176;C</div>
-          <div class="temp">Night - <span id="night-temp-2">5.5</span> &#176;C</div>
+          <div class="temp">Day: <span id="day-temp-2">5.5</span> &#176;C</div>
+          <div class="temp">
+            Night: <span id="night-temp-2">5.5</span> &#176;C
+          </div>
         </div>
         <div class="future-forecast-item">
           <div class="day" id="day-name-3">Friday</div>
@@ -96,8 +105,10 @@
             class="w-icon"
             id="icon-day-3"
           />
-          <div class="temp">Day - <span id="day-temp-3">5.5</span> &#176;C</div>
-          <div class="temp">Night - <span id="night-temp-3">5.5</span> &#176;C</div>
+          <div class="temp">Day: <span id="day-temp-3">5.5</span> &#176;C</div>
+          <div class="temp">
+            Night: <span id="night-temp-3">5.5</span> &#176;C
+          </div>
         </div>
         <div class="future-forecast-item">
           <div class="day" id="day-name-4">Friday</div>
@@ -107,8 +118,10 @@
             class="w-icon"
             id="icon-day-4"
           />
-          <div class="temp">Day - <span id="day-temp-4">5.5</span> &#176;C</div>
-          <div class="temp">Night - <span id="night-temp-4">5.5</span> &#176;C</div>
+          <div class="temp">Day: <span id="day-temp-4">5.5</span> &#176;C</div>
+          <div class="temp">
+            Night: <span id="night-temp-4">5.5</span> &#176;C
+          </div>
         </div>
         <div class="future-forecast-item">
           <div class="day" id="day-name-5">Friday</div>
@@ -118,8 +131,10 @@
             class="w-icon"
             id="icon-day-5"
           />
-          <div class="temp">Day - <span id="day-temp-5">5.5</span> &#176;C</div>
-          <div class="temp">Night - <span id="night-temp-5">5.5</span> &#176;C</div>
+          <div class="temp">Day: <span id="day-temp-5">5.5</span> &#176;C</div>
+          <div class="temp">
+            Night: <span id="night-temp-5">5.5</span> &#176;C
+          </div>
         </div>
         <div class="future-forecast-item">
           <div class="day" id="day-name-6">Friday</div>
@@ -129,12 +144,19 @@
             class="w-icon"
             id="icon-day-6"
           />
-          <div class="temp">Day - <span id="day-temp-6">5.5</span> &#176;C</div>
-          <div class="temp">Night - <span id="night-temp-6">5.5</span> &#176;C</div>
+          <div class="temp">Day: <span id="day-temp-6">5.5</span> &#176;C</div>
+          <div class="temp">
+            Night: <span id="night-temp-6">5.5</span> &#176;C
+          </div>
         </div>
       </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js" integrity="" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"
+      integrity=""
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <script src="script.js"></script>
   </body>
 </html>
