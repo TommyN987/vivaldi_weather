@@ -13,6 +13,7 @@ html {
 }
 
 body {
+  background-image: url(../img/default.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -47,6 +48,9 @@ body {
 .current-info .others .weather-item {
   display: flex;
   justify-content: space-between;
+}
+.current-info .others #btn-stop-audio {
+  margin-top: 12px;
 }
 
 .date-container {
@@ -87,7 +91,8 @@ body {
   padding: 0.4rem 1rem;
   border-radius: 10px;
 }
-.place-container #btn-search {
+
+button {
   padding: 6px 16px;
   background-color: rgb(223, 108, 0);
   color: white;

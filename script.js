@@ -17,6 +17,7 @@ const pressure = document.getElementById('pressure');
 const sunrise = document.getElementById('sunrise');
 const sunset = document.getElementById('sunset');
 const audio = document.querySelector('audio');
+const btnStop = document.getElementById('btn-stop-audio');
 
 // *******************************************************
 // GLOBAL VARIABLES
@@ -183,6 +184,7 @@ function setMood(data) {
   } else {
     audio.src = './audio/summer.mp3';
   }
+  audio.autoplay = true;
   audio.muted = false;
   audio.play();
 }
@@ -224,4 +226,8 @@ searchInput.addEventListener('keydown', (e) => {
   }
 });
 
-getLocalWeather();
+btnStop.addEventListener('click', () => {
+  audio.pause();
+})
+
+// getLocalWeather();
