@@ -24,6 +24,7 @@ const btnStop = document.getElementById('btn-stop-audio');
 // *******************************************************
 
 const API_KEY = 'c55b2f992c145e0b6c4f202c68a74305';
+
 const days = [
   'Sunday',
   'Monday',
@@ -33,6 +34,7 @@ const days = [
   'Friday',
   'Saturday',
 ];
+
 const months = [
   'Jan',
   'Feb',
@@ -122,6 +124,7 @@ function displayWeatherForecast (data) {
 };
 
 function setMood(data) {
+  
   // SET BACKGROUND IMAGE
   if (data.current.weather[0].main === 'Snow' || data.current.temp < 0) {
     body.style.backgroundImage = `url(../img/snowy.jpg)`
@@ -167,6 +170,7 @@ function renderAll(data) {
 // EVENT LISTENERS
 // *******************************************************
 
+// SEARCH WITH CLICK
 btnSearch.addEventListener('click', () => {
   getUserSearchedWeather(searchInput.value)
     .then((result) => {
@@ -179,6 +183,7 @@ btnSearch.addEventListener('click', () => {
     });
 });
 
+// SEARCH WITH ENTER
 searchInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
     getUserSearchedWeather(searchInput.value)
@@ -193,10 +198,12 @@ searchInput.addEventListener('keydown', (e) => {
   }
 });
 
+// STOP MUSIC
 btnStop.addEventListener('click', () => {
   audio.pause();
 })
 
+// MAKES CURRENT WEATHER ITEMS CONTAINER INVISIBLE WHILE SO IT DOESN'T OVERLAP WITH THE SEARCH INPUT
 navbarToggler.addEventListener('click', () => {
   if (toggler === false) {
     currentWeaherItems.style.visibility = 'hidden';
