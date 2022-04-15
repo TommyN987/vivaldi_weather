@@ -18,6 +18,7 @@ const sunrise = document.getElementById('sunrise');
 const sunset = document.getElementById('sunset');
 const audio = document.querySelector('audio');
 const btnStop = document.getElementById('btn-stop-audio');
+const image = document.getElementById('blob');
 
 // *******************************************************
 // GLOBAL VARIABLES
@@ -123,23 +124,29 @@ function displayWeatherForecast (data) {
   }
 };
 
+async function setBG(image) {
+  const res = await fetch(`./img/${image}.jpg`);
+  const blob = await res.blob();
+  body.style.backgroundImage = `url(${URL.createObjectURL(blob)})`;
+}
+
 function setMood(data) {
   
   // SET BACKGROUND IMAGE
   if (data.current.weather[0].main === 'Snow' || data.current.temp < 0) {
-    body.style.backgroundImage = `url(../img/snowy.jpg)`
+    setBG('snowy');
   } else if (data.current.weather[0].main === 'Clouds') {
-    body.style.backgroundImage = `url(../img/cloudy.jpg)`
+    setBG('cloudy');
   } else if (data.current.weather[0].main === 'Clear') {
-    body.style.backgroundImage = `url(../img/sunny.jpg)`
+    setBG('sunny');
   } else if (data.current.weather[0].main === 'Rain' || data.current.weather[0].main === 'Drizzle') {
-    body.style.backgroundImage = `url(../img/rainy.jpg)`
+    setBG('rainy');
   } else if (data.current.weather[0].main === 'Thunderstorm') {
-    body.style.backgroundImage = `url(../img/stormy.jpg)`
+    setBG('stormy');
   } else if (data.current.weather[0].main === 'Mist' || data.current.weather[0].main === 'Haze' || data.current.weather[0].main === 'Fog') {
-    body.style.backgroundImage = `url(../img/misty.jpg)`
+    setBG('misty');
   } else {
-    body.style.backgroundImage = `url(../img/default.jpg)`
+    setBG('default');
   }
 
   // SET VIVALDI
@@ -214,4 +221,4 @@ navbarToggler.addEventListener('click', () => {
   }
 })
 
-getLocalWeather();
+// getLocalWeather();
