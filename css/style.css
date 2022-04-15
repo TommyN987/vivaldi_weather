@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,700&display=swap");
-footer .forecast-container, #current-weather-items, .search-container, #brand-container {
+#info, footer .forecast-container, #current-weather-items, .search-container, #brand-container {
   background: rgba(24, 24, 27, 0.85);
   padding: 1.2rem 2rem;
   border-radius: 10px;
@@ -14,6 +14,9 @@ footer .forecast-container, #current-weather-items, .search-container, #brand-co
   font-size: 1.2rem;
   font-weight: bold;
   border-radius: 8px;
+}
+#current-weather-items #btn-stop-audio:hover, #btn-search:hover {
+  background-color: rgb(194, 97, 6);
 }
 
 html {
@@ -153,6 +156,21 @@ footer .forecast-container .temp {
   text-align: center;
 }
 
+#info {
+  margin-left: 0.8rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  min-width: 200px;
+  line-height: 2.5rem;
+}
+#info a {
+  text-decoration: none;
+  color: #eee;
+}
+#info a:hover {
+  color: rgb(223, 108, 0);
+}
+
 @media screen and (min-width: 768px) {
   main {
     margin: 3rem 2rem;
@@ -164,7 +182,7 @@ footer .forecast-container .temp {
     line-height: 2.8rem;
   }
 }
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1580px) {
   footer {
     justify-content: center;
     overflow-x: hidden;

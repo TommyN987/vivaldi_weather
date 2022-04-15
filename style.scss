@@ -15,6 +15,10 @@
   font-size: 1.2rem;
   font-weight: bold;
   border-radius: 8px;
+
+  &:hover {
+    background-color: rgb(194, 97, 6);
+  }
 }
 
 html {
@@ -171,6 +175,24 @@ footer {
   }
 }
 
+#info {
+  @extend %card-layout;
+  margin-left: .8rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  min-width: 200px;
+  line-height: 2.5rem;
+  
+  a {
+    text-decoration: none;
+    color: #eee;
+
+    &:hover {
+      color: rgb(223, 108, 0);
+    }
+  }
+}
+
 @media screen and (min-width: 768px) {
   main {
     margin: 3rem 2rem;
@@ -184,7 +206,7 @@ footer {
   }
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1580px) {
   footer {
     justify-content: center;
     overflow-x: hidden;
