@@ -1,158 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vivaldi's Weather App</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="./css/style.css" />
+    <title>Vivaldi's Weather App</title>
   </head>
   <body>
-    <div class="container">
-      <div class="current-info">
-        <div class="date-container">
-          <div id="datetime">
-            <div class="time" id="time"><span id="am-pm"></span></div>
-            <div class="date" id="date"></div>
+    <main>
+      <nav class="navbar navbar-expand-md" id="navbar">
+        <div class="container-fluid">
+          <div class="navbar-brand" id="brand-container">
+            <img src="./img/vivaldi.svg" alt="Vivaldi" id="logo" />
+            <div id="brand-name">Vivaldi's<br />Weather</div>
           </div>
-          <div class="others" id="current-weather-items">
-            <div id="locality"></div>
-            <div class="weather-item">
-              <div>Temperature</div>
-              <div id="current-temp">temp &#176;C</div>
+          <button
+            class="navbar-toggler"
+            id="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon" id="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="search-container">
+              Timezone: <span id="time-zone"></span>
+              <div class="d-flex">
+                <input
+                  class="form-control me-2"
+                  placeholder="Search city"
+                  aria-label="Search"
+                  id="search-input"
+                />
+                <button id="btn-search">
+                  Search
+                </button>
+              </div>
             </div>
-            <div class="weather-item">
-              <div>Sky</div>
-              <div id="sky">sky</div>
-            </div>
-            <div class="weather-item">
-              <div>Wind speed</div>
-              <div id="wind-speed">windspeed</div>
-            </div>
-            <div class="weather-item">
-              <div>Humidity</div>
-              <div id="humidity">humidity %</div>
-            </div>
-            <div class="weather-item">
-              <div>Pressure</div>
-              <div id="pressure">pressure</div>
-            </div>
-            <div class="weather-item">
-              <div>Sunrise</div>
-              <div id="sunrise">sunrise</div>
-            </div>
-            <div class="weather-item">
-              <div>Sunset</div>
-              <div id="sunset">sunset</div>
-            </div>
-            <button id="btn-stop-audio">Cancel Vivaldi</button>
           </div>
         </div>
-        <div class="place-container">
-          <div class="time-zone" id="time-zone">Europe/Bratislava</div>
-          <input type="text" id="search-input" placeholder="Enter city" />
-          <button id="btn-search">Search</button>
+      </nav>
+      <div id="current-weather-items">
+        <div id="locality">LOCAL</div>
+        <div class="weather-item">
+          <div>Temperature</div>
+          <div id="current-temp">temp &#176;C</div>
         </div>
+        <div class="weather-item">
+          <div>Sky</div>
+          <div id="sky">sky</div>
+        </div>
+        <div class="weather-item">
+          <div>Wind speed</div>
+          <div id="wind-speed">windspeed</div>
+        </div>
+        <div class="weather-item">
+          <div>Humidity</div>
+          <div id="humidity">humidity %</div>
+        </div>
+        <div class="weather-item">
+          <div>Pressure</div>
+          <div id="pressure">pressure</div>
+        </div>
+        <div class="weather-item">
+          <div>Sunrise</div>
+          <div id="sunrise">sunrise</div>
+        </div>
+        <div class="weather-item">
+          <div>Sunset</div>
+          <div id="sunset">sunset</div>
+        </div>
+        <button id="btn-stop-audio">Cancel Vivaldi</button>
       </div>
-    </div>
-    <div class="forecast" id="forecast">
-      <div class="today">
+    </main>
+    <footer class="forecast" id="forecast">
+      <div class="forecast-container">
+        <div class="day" id="day-name-0">Friday</div>
         <img
           src="http://openweathermap.org/img/wn/10d@2x.png"
           alt="Weather Icon"
           class="w-icon"
           id="icon-day-0"
         />
-        <div class="other">
-          <div class="day" id="day-name-0">Friday</div>
+        <div class="daily-forecast-data">
           <div class="temp">Day: <span id="day-temp-0">5.5</span> &#176;C</div>
           <div class="temp">
             Night: <span id="night-temp-0">5.5</span> &#176;C
           </div>
         </div>
       </div>
-      <div class="future-forecast-container" id="future-forecast-container">
-        <div class="future-forecast-item">
-          <div class="day" id="day-name-1">Friday</div>
-          <img
-            src="http://openweathermap.org/img/wn/10d@2x.png"
-            alt="Weather icon"
-            class="w-icon"
-            id="icon-day-1"
-          />
+      <div class="forecast-container">
+        <div class="day" id="day-name-1">Friday</div>
+        <img
+          src="http://openweathermap.org/img/wn/10d@2x.png"
+          alt="Weather Icon"
+          class="w-icon"
+          id="icon-day-1"
+        />
+        <div class="daily-forecast-data">
           <div class="temp">Day: <span id="day-temp-1">5.5</span> &#176;C</div>
           <div class="temp">
             Night: <span id="night-temp-1">5.5</span> &#176;C
           </div>
         </div>
-        <div class="future-forecast-item">
-          <div class="day" id="day-name-2">Friday</div>
-          <img
-            src="http://openweathermap.org/img/wn/10d@2x.png"
-            alt="Weather icon"
-            class="w-icon"
-            id="icon-day-2"
-          />
+      </div>
+      <div class="forecast-container">
+        <div class="day" id="day-name-2">Friday</div>
+        <img
+          src="http://openweathermap.org/img/wn/10d@2x.png"
+          alt="Weather Icon"
+          class="w-icon"
+          id="icon-day-2"
+        />
+        <div class="daily-forecast-data">
           <div class="temp">Day: <span id="day-temp-2">5.5</span> &#176;C</div>
           <div class="temp">
             Night: <span id="night-temp-2">5.5</span> &#176;C
           </div>
         </div>
-        <div class="future-forecast-item">
-          <div class="day" id="day-name-3">Friday</div>
-          <img
-            src="http://openweathermap.org/img/wn/10d@2x.png"
-            alt="Weather icon"
-            class="w-icon"
-            id="icon-day-3"
-          />
+      </div>
+      <div class="forecast-container">
+        <div class="day" id="day-name-3">Friday</div>
+        <img
+          src="http://openweathermap.org/img/wn/10d@2x.png"
+          alt="Weather Icon"
+          class="w-icon"
+          id="icon-day-3"
+        />
+        <div class="daily-forecast-data">
           <div class="temp">Day: <span id="day-temp-3">5.5</span> &#176;C</div>
           <div class="temp">
             Night: <span id="night-temp-3">5.5</span> &#176;C
           </div>
         </div>
-        <div class="future-forecast-item">
-          <div class="day" id="day-name-4">Friday</div>
-          <img
-            src="http://openweathermap.org/img/wn/10d@2x.png"
-            alt="Weather icon"
-            class="w-icon"
-            id="icon-day-4"
-          />
+      </div>
+      <div class="forecast-container">
+        <div class="day" id="day-name-4">Friday</div>
+        <img
+          src="http://openweathermap.org/img/wn/10d@2x.png"
+          alt="Weather Icon"
+          class="w-icon"
+          id="icon-day-4"
+        />
+        <div class="daily-forecast-data">
           <div class="temp">Day: <span id="day-temp-4">5.5</span> &#176;C</div>
           <div class="temp">
             Night: <span id="night-temp-4">5.5</span> &#176;C
           </div>
         </div>
-        <div class="future-forecast-item">
-          <div class="day" id="day-name-5">Friday</div>
-          <img
-            src="http://openweathermap.org/img/wn/10d@2x.png"
-            alt="Weather icon"
-            class="w-icon"
-            id="icon-day-5"
-          />
+      </div>
+      <div class="forecast-container">
+        <div class="day" id="day-name-5">Friday</div>
+        <img
+          src="http://openweathermap.org/img/wn/10d@2x.png"
+          alt="Weather Icon"
+          class="w-icon"
+          id="icon-day-5"
+        />
+        <div class="daily-forecast-data">
           <div class="temp">Day: <span id="day-temp-5">5.5</span> &#176;C</div>
           <div class="temp">
             Night: <span id="night-temp-5">5.5</span> &#176;C
           </div>
         </div>
-        <div class="future-forecast-item">
-          <div class="day" id="day-name-6">Friday</div>
-          <img
-            src="http://openweathermap.org/img/wn/10d@2x.png"
-            alt="Weather icon"
-            class="w-icon"
-            id="icon-day-6"
-          />
+      </div>
+      <div class="forecast-container">
+        <div class="day" id="day-name-6">Friday</div>
+        <img
+          src="http://openweathermap.org/img/wn/10d@2x.png"
+          alt="Weather Icon"
+          class="w-icon"
+          id="icon-day-6"
+        />
+        <div class="daily-forecast-data">
           <div class="temp">Day: <span id="day-temp-6">5.5</span> &#176;C</div>
           <div class="temp">
             Night: <span id="night-temp-6">5.5</span> &#176;C
           </div>
         </div>
       </div>
-    </div>
-    <audio src="" muted></audio>
+    </footer>
+    <audio src=""></audio>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"
       integrity=""

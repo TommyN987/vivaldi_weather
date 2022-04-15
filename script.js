@@ -3,11 +3,11 @@
 // *******************************************************
 
 const body = document.querySelector('body');
-const time = document.getElementById('time');
-const date = document.getElementById('date');
 const timezone = document.getElementById('time-zone');
+const navbarToggler = document.getElementById('navbar-toggler');
 const searchInput = document.getElementById('search-input');
 const btnSearch = document.getElementById('btn-search');
+const currentWeaherItems = document.getElementById('current-weather-items');
 const locality = document.getElementById('locality');
 const currentTemp = document.getElementById('current-temp');
 const sky = document.getElementById('sky');
@@ -48,30 +48,7 @@ const months = [
   'Dec',
 ];
 
-// *******************************************************
-// GET CURRENT TIME AND DATE
-// *******************************************************
-
-(function getTimeAndDate() {
-  setInterval(() => {
-    const currentTime = new Date();
-    const month = currentTime.getMonth();
-    const currentdate = currentTime.getDate();
-    const day = currentTime.getDay();
-    const hour = currentTime.getHours();
-    const ampm = hour >= 12 ? 'PM' : 'AM';
-    const hoursIn12HrFormat = hour >= 13 ? hour % 12 : hour;
-    const minutes = currentTime.getMinutes();
-
-    time.innerHTML = `${
-      hoursIn12HrFormat < 10 ? '0' + hoursIn12HrFormat : hoursIn12HrFormat
-    }:${
-      minutes < 10 ? '0' + minutes : minutes
-    } <span id="am-pm">${ampm}</span>`;
-
-    date.innerHTML = `${days[day]}, ${currentdate} ${months[month]}`;
-  }, 1000);
-})();
+let toggler = false;
 
 // *******************************************************
 // GET LOCAL WEATHER DATA
@@ -96,15 +73,6 @@ function getLocalWeather () {
         alert(`Couldn't retrieve data for your location:
         ${error}`);  
       });
-
-    fetch(
-      `http://api.openweathermap.org/geo/1.0/reverse?lat=${success.coords.latitude}&lon=${success.coords.longitude}&limit=5&appid=${API_KEY}`
-    )
-      .then((res) => res.json())
-      .then((geo) => {
-        console.log(geo);
-        timezone.innerText = geo[0].name + ', ' + geo[0].country;
-      })
   });
 };
 
@@ -118,12 +86,10 @@ async function getUserSearchedWeather (city) {
   // GET COORDINATES
   const res = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${API_KEY}`);
   const geoData = await res.json();
-  console.log(geoData);
   
   // FORECAST DATA
   const forecastRes = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${geoData[0].lat}&lon=${geoData[0].lon}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`);
   const forecastData = await forecastRes.json();
-  console.log(forecastData);
   return { geoData, forecastData };
 }
 
@@ -132,6 +98,7 @@ async function getUserSearchedWeather (city) {
 // *******************************************************
 
 function displayCurrentWeather (data) {
+  timezone.innerText = data.timezone;
   currentTemp.innerText = `${data.current.temp} °C`;
   sky.innerText = data.current.weather[0].main;
   windSpeed.innerText = `${data.current.wind_speed} m/s`;
@@ -190,7 +157,7 @@ function setMood(data) {
 }
 
 function renderAll(data) {
-  timezone.innerText = data.geoData[0].name + ', ' + data.geoData[0].country;
+  locality.innerText = data.geoData[0].name + ', ' + data.geoData[0].country;
   setMood(data.forecastData);
   displayCurrentWeather(data.forecastData);
   displayWeatherForecast(data.forecastData.daily);
@@ -217,7 +184,7 @@ searchInput.addEventListener('keydown', (e) => {
     getUserSearchedWeather(searchInput.value)
     .then((result) => {
       searchInput.value = '';
-      renderAll(result);
+      renderAll(result)
     })
     .catch((error) => {
       alert(`Couldn't retrieve data for ${searchInput.value}:
@@ -230,4 +197,14 @@ btnStop.addEventListener('click', () => {
   audio.pause();
 })
 
-// getLocalWeather();
+navbarToggler.addEventListener('click', () => {
+  if (toggler === false) {
+    currentWeaherItems.style.visibility = 'hidden';
+    toggler = true;
+  } else {
+    currentWeaherItems.style.visibility = 'visible';
+    toggler = false;
+  }
+})
+
+getLocalWeather();
