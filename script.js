@@ -125,7 +125,7 @@ function displayWeatherForecast (data) {
 };
 
 async function setBG(image) {
-  const res = await fetch(`../img/${image}.jpg`);
+  const res = await fetch(`./img/${image}.jpg`);
   const blob = await res.blob();
   body.style.backgroundImage = `url(${URL.createObjectURL(blob)})`;
 }
