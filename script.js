@@ -18,7 +18,7 @@ const sunrise = document.getElementById('sunrise');
 const sunset = document.getElementById('sunset');
 const audio = document.querySelector('audio');
 const btnStop = document.getElementById('btn-stop-audio');
-const image = document.getElementById('blob');
+const forecast = document.getElementById('forecast');
 
 // *******************************************************
 // GLOBAL VARIABLES
@@ -214,9 +214,11 @@ btnStop.addEventListener('click', () => {
 navbarToggler.addEventListener('click', () => {
   if (toggler === false) {
     currentWeaherItems.style.visibility = 'hidden';
+    forecast.style.visibility = 'hidden';
     toggler = true;
   } else {
     currentWeaherItems.style.visibility = 'visible';
+    forecast.style.visibility = 'visible';
     toggler = false;
   }
 })
