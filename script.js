@@ -87,7 +87,7 @@ function getLocalWeather () {
 async function getUserSearchedWeather (city) {
   
   // GET COORDINATES
-  const res = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${API_KEY}`);
+  const res = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${API_KEY}`);
   const geoData = await res.json();
   
   // FORECAST DATA
@@ -120,7 +120,7 @@ function displayWeatherForecast (data) {
     document.getElementById(`day-name-${i}`).innerText = window.moment(data[i].dt*1000).format('ddd');
     document.getElementById(`day-temp-${i}`).innerText = data[i].temp.day;
     document.getElementById(`night-temp-${i}`).innerText = data[i].temp.night;
-    document.getElementById(`icon-day-${i}`).src = `http://openweathermap.org/img/wn/${data[i].weather[0].icon}@2x.png`;
+    document.getElementById(`icon-day-${i}`).src = `https://openweathermap.org/img/wn/${data[i].weather[0].icon}@2x.png`;
   }
 };
 
@@ -221,4 +221,4 @@ navbarToggler.addEventListener('click', () => {
   }
 })
 
-// getLocalWeather();
+getLocalWeather();
